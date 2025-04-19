@@ -23,36 +23,26 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
 
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world!
-
-      # Install H2 database
-      - name: Liquibase Init Start H2 Action
-      # You may pin to the exact commit or the version.
-      # uses: liquibase-github-actions/init-start-h2@0bc68ec9e912a925ff5603bed8cbf68afb38d4c0
-      - uses: liquibase-github-actions/init-start-h2@v4.31.1
+      - name: Set up JDK 21
+        uses: actions/setup-java@v3.14.1
         with:
-          # Network address to bind to
-          bindAddress: # optional
-          # Port to run h2 database on
-          dbPort: # optional
-          # When set to true, Liquibase initiates the H2 database in a new thread without blocking, allowing use within the flow command. Regardless of the parameter setting, data stored in the H2 database is cleared when the JVM exits, such as at the end of the flow command.
-          detached: # optional
-          # Whether to open a browser to the database"s web interface
-          launchBrowser: # optional
-          # Password to use for created h2 user
-          password: # optional
-          # Username to create in h2
-          username: # optional
-          # Port to run h2"s web interface on
-          webPort: # optional
-          # If true, a subset of the MdcKeys, as defined by product, will be set to empty strings upon system startup.
-          addEmptyMdcValues: # optional
-          # Allows duplicated changeset identifiers without failing Liquibase execution.
-          allowDuplicatedChangesetIdentifiers: # optional
-          # If true, drop and recreate a view instead of replacing it.
-          alwaysDropInsteadOfReplace: # optional
+          java-version: '21'
+          distribution: 'corretto'
 
+      - name: Build
+        run: mvn --batch-mode package -Dmaven.test.skip=true
+
+      - name: Test
+        run: mvn --batch-mode -Dmaven.test.failure.ignore=true test
+
+      - name: Report
+        uses: dorny/test-reporter@v1.9.1
+        if: always()
+        with:
+          name: Maven Tests
+          path: target/surefire-reports/*.xml
+          reporter: java-junit
+          fail-on-error: true
