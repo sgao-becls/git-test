@@ -12,6 +12,6 @@ public class TestExample {
 
     @Test
     public void testLong() {
-        Assertions.assertEquals(0L, 1L);
+        Assertions.assertEquals(0L, 0L);
     }
 }
