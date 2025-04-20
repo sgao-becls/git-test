@@ -14,4 +14,16 @@ public class TestExample {
     public void testLong() {
         Assertions.assertEquals(0L, 0L);
     }
+
+    @Test
+    public void testString() {
+        // given
+        String expected = "Hello";
+
+        // when
+        String actual = "Hello World";
+
+        // then
+        Assertions.assertEquals(expected, actual);
+    }
 }
