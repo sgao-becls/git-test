@@ -36,7 +36,7 @@ jobs:
         run: mvn --batch-mode package -Dmaven.test.skip=true
 
       - name: Test
-        run: mvn --batch-mode -Dmaven.test.failure.ignore=true test
+        run: mvn --batch-mode -Dmaven.test.failure.ignore=true test -fae
 
       - name: Report
         uses: dorny/test-reporter@v1.9.1
