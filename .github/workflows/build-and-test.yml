@@ -16,7 +16,7 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
-  build:
+  unit-test:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
@@ -38,11 +38,11 @@ jobs:
       - name: Test
         run: mvn --batch-mode -Dmaven.test.failure.ignore=true test
 
-      - name: Report
-        uses: dorny/test-reporter@v1.9.1
-        if: always()
-        with:
-          name: Maven Tests
-          path: target/surefire-reports/*.xml
-          reporter: java-junit
-          fail-on-error: true
+#      - name: Report
+#        uses: dorny/test-reporter@v1.9.1
+#        if: always()
+#        with:
+#          name: Maven Tests
+#          path: target/surefire-reports/*.xml
+#          reporter: java-junit
+#          fail-on-error: true
