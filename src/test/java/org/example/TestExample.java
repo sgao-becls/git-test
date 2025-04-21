@@ -17,6 +17,6 @@ public class TestExample {
 
     @Test
     public void testString() {
-        Assertions.assertEquals("HELLO111112222", "HELLO111112222");
+        Assertions.assertEquals("HELLO1111122221", "HELLO1111122221");
     }
 }
