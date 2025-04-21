@@ -14,4 +14,9 @@ public class TestExample {
     public void testLong() {
         Assertions.assertEquals(0L, 0L);
     }
+
+    @Test
+    public void testString() {
+        Assertions.assertEquals("", "HELLO");
+    }
 }
